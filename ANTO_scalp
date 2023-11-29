@@ -227,6 +227,14 @@ filter_tradingcount_scalp <- filter_tradingcount_scalp[filter_tradingcount_scalp
 filter_tradingcount_scalp <- filter_tradingcount_scalp[order(filter_tradingcount_scalp$盈利, decreasing = T),]
 filter_tradingcount_scalp[,5] <- round(filter_tradingcount_scalp[,5], digits = 2)
 
+data_high_return <- readxl::read_excel("安東關注名單.xlsx")
+data_high_return <- data_high_return[,c(3,1)]
+
+colnames(data_high_return) <- c("ID","風險等級")
+merged_data <- merge(filter_tradingcount_scalp, data_high_return, by = "ID", all.x = T)
+data_report1 <- merged_data
+data_report1 <- data_report1[order(data_report1$盈利, decreasing = T ),]
+
 # 寫入excel
 file_path <- "D:\\Users\\marshaw.tan\\Downloads\\ANTO_剝頭皮.xlsx"
 #file_path <- setwd("C:\\Users\\user\\Downloads\\Telegram Desktopfilter_tradingcount_scalp.xlsx") #HOME
